@@ -15,8 +15,9 @@ async def on_guild_join(ctx):
     channel = await ctx.guild.owner_id.create_dm()
     await channel.send("Thanks for adding the bot! Use setprefix to change the prefix of the bot in the server! Default prefix is '='")
 @bot.event
-async def on_member_join(member):
+async def on_member_join(ctx, member):
     print(f'{member} has joined the server! We Welcome you!')
+    ctx.send(f'Welcome {member} to the server! We welcome you!')
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -51,9 +52,15 @@ async def everyone(ctx):
         await ctx.send(ctx.message.guild.default_role, delete_after=0.1)
         time.sleep(1)
 @bot.command()
-async def help(ctx, *, category=None):
+async def help(ctx, category=None):
     if category == 'ww2':
-        ctx.send("=ww2 bob - Battle of Britain\n=ww2 tov - Treaty of Versailles")
+      embed = discord.Embed(
+            title='__WW2 Commands (In chronological order)__',
+            colour = discord.Colour.orange()
+        )
+      embed.add_field(name="=ww2 tov", value="Treaty of Versailles", inline=False)
+      embed.add_field(name='=ww2 bob', value="Battle of Britain", inline=False)
+      await ctx.send(embed=embed)
     else:
         author = ctx.message.author
         embed = discord.Embed(
@@ -100,6 +107,6 @@ async def ww2(ctx, battle_name="None"):
 @bot.command()
 async def tov(ctx, terms=None):
     if terms == "terms":
-        await ctx.send("1) Germany can't have an Air Force \n2) It can't have an army of more than a **100,000 men**\n3) The surrender of all German colonies\n4) The return of **Alsace-Lorraine** to France\n5) Cession of some other territories to **Belgium, Lithuania, Czechoslovakia and Poland**\n6) Danzig to become a free city\n7) Plebiscites to be held in northern Schleswig to settle the Danish-German frontier.\n8) Occupation and special status for the **Saar Land** under French control\n9) Demilitarization of the **Rhineland**\n10) Germany would have to pay all war reparations to the allies\n11) **Austria** was taken from Germany and made a seperate country\n12) Germany has to take full responsibity for starting the War\n13) Provision for the trial of the former Kaiser and other war leaders.\nGermany felt extremely humiliated by all this, and nobody was madder about the treaty than Hitler. He made fiery speeches against it which rose him to prominence ")
-        await ctx.send(file=discord.File('map.png'))
-bot.run('ODk1NTU4MDI0NjI0NzM4MzU1.YV6TZw.bHmbu8UqiYNuTnS627umihldq7A')
+        file = discord.File("map.png")
+        await ctx.send(file=file, content="1) Germany can't have an Air Force \n2) It can't have an army of more than a **100,000 men**\n3) The surrender of all German colonies\n4) The return of **Alsace-Lorraine** to France\n5) Cession of some other territories to **Belgium, Lithuania, Czechoslovakia and Poland**\n6) Danzig to become a free city\n7) Plebiscites to be held in northern Schleswig to settle the Danish-German frontier.\n8) Occupation and special status for the **Saar Land** under French control\n9) Demilitarization of the **Rhineland**\n10) Germany would have to pay all war reparations to the allies\n11) **Austria** was taken from Germany and made a seperate country\n12) Germany has to take full responsibity for starting the War\n13) Provision for the trial of the former Kaiser and other war leaders.\nGermany felt extremely humiliated by all this, and nobody was madder about the treaty than Hitler. He made fiery speeches against it which rose him to prominence ")
+bot.run('ODk1NTU4MDI0NjI0NzM4MzU1.YV6TZw.pMFStnMySApjJ25WFhXxy8OXmUE')
